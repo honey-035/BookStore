@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body class="min-h-screen bg-[#eef7ff]">
+    <%- include('includes/nav.ejs') %>
+    <main class="max-w-5xl mx-auto px-6 py-10">
+        <h1 class="text-3xl font-bold text-[#123f63] mb-8"
+            style="font-family: Georgia, serif;">
+            <i class="fa-solid fa-credit-card"></i>
+            Checkout
+        </h1>
+        <% if (cart.length === 0) { %>
+            <div class="bg-white rounded-2xl p-10 text-center shadow">
+                <i class="fa-solid fa-cart-shopping
+                          text-4xl text-[#18577f] mb-4">
+                </i>
+
+                <h2 class="text-xl font-semibold text-gray-700">
+                    Your cart is empty
+                </h2>
+
+                <a href="/books"
+                   class="inline-block mt-5 px-6 py-3 rounded-full
+                          bg-[#18577f] text-white
+                          hover:bg-[#123f63] transition">Browse Books </a>
+            </div>
+
+        <% } else { %>
+            <div class="bg-white rounded-2xl shadow p-6 mb-7">
+                <h2 class="text-xl font-bold text-[#123f63] mb-5">
+                    <i class="fa-solid fa-receipt"></i>
+                    Order Summary
+                </h2>
+
+                <% cart.forEach(book => { %>
+                    <div class="flex items-center gap-5
+                                py-4 border-b border-gray-100">
+
+                        <img src="<%= book.img.startsWith('/') ? book.img : '/' + book.img %>" class="w-20 h-28 rounded-lg object-cover" >
+                        <div class="flex-1">
+                            <h3 class="font-bold text-[#164e78]"
+                                style="font-family: Georgia, serif;">
+                                <%= book.title %>
+                            </h3>
+
+                            <p class="text-sm text-gray-500 mt-1">
+                                Quantity:
+                                <%= book.quantity %>
+                            </p>
+
+                            <p class="text-sm text-gray-500">
+                                ₹ <%= book.price %> ×
+                                <%= book.quantity %>
+                            </p>
+                        </div>
+
+                        <p class="font-bold text-[#18577f]">
+                            ₹ <%= book.price * book.quantity %>
+                        </p>
+                    </div>
+                <% }) %>
+
+
+                <div class="flex justify-between
+                            items-center mt-6">
+                    <h2 class="text-xl font-bold text-[#123f63]">
+                        Total Amount
+                    </h2>
+
+                    <p class="text-2xl font-bold text-[#18577f]">
+                        ₹
+                        <%= cart.reduce((total, book) =>
+                            total + (book.price * book.quantity), 0
+                        ) %>
+                    </p>
+                </div>
+            </div>
+
+
+            <form action="/place-order"
+                  method="post">
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h2 class="text-xl font-bold text-[#123f63] mb-5">
+                        <i class="fa-solid fa-wallet"></i>
+                        Payment Method
+                    </h2>
+                    <div class="space-y-3">
+
+                        <label class="flex items-center gap-4
+                                      p-4 rounded-xl
+                                      border border-[#d4e6f2]
+                                      cursor-pointer
+                                      hover:bg-[#f4faff]">
+
+                            <input type="radio"  name="payment" value="COD" checked class="accent-[#18577f]">
+                            <i class="fa-solid fa-money-bill-wave
+                                      text-[#18577f]">
+                            </i>
+
+                            <span class="font-semibold text-gray-700">Cash on Delivery </span>
+                        </label>
+
+
+                        <label class="flex items-center gap-4
+                                      p-4 rounded-xl
+                                      border border-[#d4e6f2]
+                                      cursor-pointer
+                                      hover:bg-[#f4faff]">
+
+                            <input type="radio" name="payment" value="UPI" class="accent-[#18577f]">
+
+                            <i class="fa-solid fa-mobile-screen-button text-[#18577f]"> </i>
+                            <span class="font-semibold text-gray-700"> UPI </span>
+                        </label>
+
+                        <label class="flex items-center gap-4
+                                      p-4 rounded-xl
+                                      border border-[#d4e6f2]
+                                      cursor-pointer
+                                      hover:bg-[#f4faff]">
+
+                            <input type="radio" name="payment" value="Card" class="accent-[#18577f]">
+                            <i class="fa-solid fa-credit-card text-[#18577f]"></i>
+                            <span class="font-semibold text-gray-700"> Debit / Credit Card</span>
+                        </label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-3.5 mt-7 rounded-xl
+                               bg-[#18577f]
+                               text-white
+                               font-semibold
+                               hover:bg-[#123f63]
+                               transition">
+                        <i class="fa-solid fa-check"></i>  Place Order
+                    </button>
+                </div>
+            </form>
+        <% } %>
+    </main>
+    <%- include('includes/footer.ejs') %>
+</body>
+</html>

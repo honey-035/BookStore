@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<header class="site-header">
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="brand" href="/" aria-label="<%= siteName %> home">
+      <span class="brand-mark"><i class="fa-solid fa-book-open"></i></span>
+      <span class="brand-copy"><strong><%= siteName %></strong><small>YOUR NEXT CHAPTER</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/books">Books</a>
+      <a href="/category">Categories</a>
+      <a href="/about">Our Story</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-icon" href="/admin/login" title="Admin Login" aria-label="Admin Login"><i class="fa-regular fa-user"></i></a>
+      <a class="cart-link" href="/cart" aria-label="Shopping Cart">
+        <i class="fa-solid fa-bag-shopping"></i><span>Bag</span>
+        <b id="cart-count"><%= typeof cartCount !== 'undefined' ? cartCount : 0 %></b>
+      </a>
+    </div>
+  </nav>
+</header>

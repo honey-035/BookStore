@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Order Successful</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body class="min-h-screen bg-[#eef7ff]">
+    <%- include('includes/nav.ejs') %>
+    <main class="min-h-[75vh] flex items-center justify-center px-6">
+        <div class="bg-white rounded-3xl shadow-lg
+                    w-full max-w-xl
+                    p-10 text-center">
+
+            <div class="w-20 h-20 mx-auto
+                        rounded-full
+                        bg-[#e8f5ee]
+                        flex items-center justify-center">
+
+                <i class="fa-solid fa-check text-4xl text-green-600"></i>
+            </div>
+
+            <h1 class="text-3xl font-bold text-[#123f63] mt-6" style="font-family: Georgia, serif;">Order Placed Successfully!</h1>
+            <p class="text-gray-600 mt-3">Thank you for shopping with <%= siteName %>.</p>
+
+            <div class="bg-[#f4faff]
+                        rounded-2xl
+                        p-5 mt-7
+                        text-left">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600"> Payment Method</span>
+
+                    <span class="font-semibold text-[#18577f]">
+
+                        <% if (payment === 'COD') { %>
+                            Cash on Delivery
+
+                        <% } else if (payment === 'UPI') { %>
+                            UPI
+
+                        <% } else { %>
+                            Debit / Credit Card
+
+                        <% } %>
+                    </span>
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                    <span class="text-gray-600"> Total Amount </span>
+                    <span class="font-bold
+                                 text-xl
+                                 text-[#18577f]">
+
+                        ₹ <%= total %>
+                    </span>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-500 mt-6">Your order has been received successfully.</p>
+            <a href="/books"
+               class="inline-block mt-7
+                      px-7 py-3
+                      rounded-full
+                      bg-[#18577f]
+                      text-white
+                      font-semibold
+                      hover:bg-[#123f63]
+                      transition">
+                <i class="fa-solid fa-book-open"></i> Continue Shopping</a>
+        </div>
+    </main>
+    <%- include('includes/footer.ejs') %>
+</body>
+</html>

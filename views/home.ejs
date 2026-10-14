@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= siteName %> | Find your next favourite</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body class="home-page">
+<%- include('includes/nav.ejs') %>
+<main>
+  <section class="hero-wrap">
+    <div class="hero-panel">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> THE LITTLE CORNER FOR BIG IDEAS</div>
+        <h1>Some stories<br>stay with <em>you.</em></h1>
+        <p class="hero-description">Find the book that meets you where you are — and takes you somewhere new.</p>
+        <div class="hero-buttons">
+          <a href="/books" class="btn btn-primary">Explore the collection <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/category" class="btn btn-ghost">Browse categories</a>
+        </div>
+        <div class="hero-proof"><span class="proof-icon"><i class="fa-solid fa-book-open"></i></span><span><strong>A world between the covers</strong><small>Stories, knowledge & fresh perspectives</small></span></div>
+      </div>
+      <div class="hero-art" aria-label="Books and reading illustration">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="floating-note note-top"><i class="fa-solid fa-sparkles"></i> A new chapter awaits</div>
+        <div class="book-stack">
+          <div class="book book-back"><span>THE ART OF<br>NOTICING</span><small>little things, big meaning</small></div>
+          <div class="book book-middle"><span>WILD<br>IDEAS</span><small>make room for wonder</small></div>
+          <div class="book book-front"><i class="fa-solid fa-leaf"></i><span>THE<br>QUIET<br>GARDEN</span><small>stories for the soul</small></div>
+        </div>
+        <div class="floating-note note-bottom"><i class="fa-regular fa-heart"></i> Read. Feel. Repeat.</div>
+      </div>
+      <div class="hero-stamp"><span>TURN THE</span><strong>PAGE</strong><i class="fa-solid fa-arrow-down"></i></div>
+    </div>
+  </section>
+
+  <section class="benefit-strip">
+    <div><span class="benefit-icon"><i class="fa-solid fa-book-open"></i></span><span><strong>Stories worth sharing</strong><small>Find your next favourite</small></span></div>
+    <div><span class="benefit-icon"><i class="fa-solid fa-lightbulb"></i></span><span><strong>Ideas that stay</strong><small>Learn something new</small></span></div>
+    <div><span class="benefit-icon"><i class="fa-solid fa-compass"></i></span><span><strong>Something for everyone</strong><small>Explore at your own pace</small></span></div>
+  </section>
+
+  <section class="section-shell category-intro">
+    <div class="section-heading">
+      <div><span class="eyebrow">FOLLOW YOUR CURIOSITY</span><h2>What are you in<br>the mood to <em>read?</em></h2></div>
+      <p>From page-turning fiction to ideas that shift your perspective, your next favourite is waiting somewhere in the stacks.</p>
+    </div>
+    <div class="mood-grid">
+      <a class="mood-card mood-fiction" href="/category/Fiction"><span class="mood-number">01 / STORIES</span><i class="fa-solid fa-masks-theater"></i><h3>Get lost<br>in a story</h3><span class="mood-link">Explore fiction <i class="fa-solid fa-arrow-up-right-from-square"></i></span><div class="mood-decoration">Once<br>upon<br>a time.</div></a>
+      <a class="mood-card mood-learn" href="/category/Self-Help"><span class="mood-number">02 / GROWTH</span><i class="fa-solid fa-seedling"></i><h3>Grow a little<br>every day</h3><span class="mood-link">Explore self-help <i class="fa-solid fa-arrow-up-right-from-square"></i></span><div class="mood-decoration">Better<br>by one<br>percent.</div></a>
+      <a class="mood-card mood-discover" href="/category/Mythology"><span class="mood-number">03 / DISCOVERY</span><i class="fa-solid fa-moon"></i><h3>Discover<br>another world</h3><span class="mood-link">Explore more <i class="fa-solid fa-arrow-up-right-from-square"></i></span><div class="mood-decoration">Beyond<br>the known<br>world.</div></a>
+    </div>
+  </section>
+
+  <section class="featured-section">
+    <div class="section-shell">
+      <div class="section-heading featured-heading">
+        <div><span class="eyebrow">HANDPICKED FOR YOUR SHELF</span><h2>Featured <em>finds.</em></h2><p class="heading-subtitle">A small selection to spark a big reading mood.</p></div>
+        <a href="/books" class="text-link">Meet the whole collection <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="featured-grid">
+        <% if (books && books.length) { %>
+          <% books.forEach((book, index) => { %>
+            <article class="featured-book">
+              <a class="featured-cover" href="/books" aria-label="Browse <%= book.title %> and more">
+                <span class="cover-index">0<%= index + 1 %></span>
+                <img src="<%= book.img.startsWith('/') ? book.img : '/' + book.img %>" alt="<%= book.title %>">
+                <span class="cover-view">Discover book <i class="fa-solid fa-arrow-right"></i></span>
+              </a>
+              <div class="featured-meta"><span><%= book.category %></span><span>₹ <%= book.price %></span></div>
+              <h3><%= book.title %></h3><p>by <%= book.author %></p>
+              <form action="/cart/add/<%= book._id %>" method="post"><button class="btn btn-dark btn-full" type="submit"><i class="fa-solid fa-bag-shopping"></i> Add to bag</button></form>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <div class="empty-featured"><i class="fa-solid fa-book-open"></i><h3>Your next favourite is on its way.</h3><p>Explore the collection to discover available books.</p><a href="/books" class="btn btn-dark">Browse all books</a></div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-section"><div class="quote-mark">“</div><p>A reader lives a thousand lives before he dies.<br><em>The person who never reads lives only one.</em></p><span>— A LITTLE REMINDER TO KEEP READING</span></section>
+  <section class="bottom-cta"><div><span class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</span><h2>Ready to find<br>your <em>kind of book?</em></h2></div><a href="/books" class="btn btn-primary">Browse the bookshelf <i class="fa-solid fa-arrow-right"></i></a></section>
+</main>
+<%- include('includes/footer.ejs') %>
+</body>
+</html>

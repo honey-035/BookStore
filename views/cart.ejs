@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body class="min-h-screen bg-[#eef7ff] flex flex-col">
+    <%- include('includes/nav.ejs') %>
+    <main class="max-w-5xl mx-auto px-6 py-10 w-full flex-1">
+        <h1 class="text-3xl font-bold text-[#123f63] mb-8"
+            style="font-family: Georgia, serif;">
+            <i class="fa-solid fa-cart-shopping"></i>
+            My Cart
+        </h1>
+
+        <% if (cart.length === 0) { %>
+            <div class="bg-white rounded-2xl p-10 text-center shadow">
+                <i class="fa-solid fa-cart-shopping
+                          text-4xl text-[#18577f] mb-4">
+                </i>
+                <h2 class="text-xl font-semibold text-gray-700">
+                    Your cart is empty
+                </h2>
+                <a href="/books" class="inline-block mt-5 px-6 py-3 rounded-full bg-[#18577f] text-white hover:bg-[#123f63] transition">Browse Books</a>
+            </div>
+
+        <% } else { %>
+            <% cart.forEach(book => { %>
+                <div id="cart-item-<%= book.id %>" class="bg-white rounded-2xl p-5 mb-5 shadow flex items-center gap-6">
+                    <img  src="<%= book.img.startsWith('/') ? book.img : '/' + book.img %>" width="120"  height="160" class="rounded-xl object-cover" >
+                    <div class="flex-1">
+                        <h2 class="text-xl font-bold text-[#164e78]"
+                            style="font-family: Georgia, serif;">
+                            <%= book.title %>
+                        </h2>
+                        <p class="text-gray-600 mt-2">
+                            Author:
+                            <%= book.author %>
+                        </p>
+                        <p class="text-[#18577f] font-bold mt-2">
+                            ₹ <%= book.price %>
+                        </p>
+
+                        <div class="flex items-center gap-3 mt-4">
+                            <button type="button" onclick="changeQuantity('<%= book.id %>', 'decrease')"
+                                class="w-9 h-9 rounded-full
+                                       bg-[#e8f4fc]
+                                       text-[#18577f]
+                                       font-bold text-lg
+                                       hover:bg-[#d5eaf8]
+                                       transition">
+                                −
+                            </button>
+
+                            <span id="quantity-<%= book.id %>"
+                                  class="w-8 text-center font-bold text-[#123f63]">
+                                <%= book.quantity %>
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="changeQuantity('<%= book.id %>', 'increase')"
+                                class="w-9 h-9 rounded-full
+                                       bg-[#e8f4fc]
+                                       text-[#18577f]
+                                       font-bold text-lg
+                                       hover:bg-[#d5eaf8]
+                                       transition">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">
+                            Subtotal
+                        </p>
+                        <p id="subtotal-<%= book.id %>"
+                           data-price="<%= book.price %>"
+                           class="text-xl font-bold text-[#18577f]">
+                            ₹ <%= book.price * book.quantity %>
+                        </p>
+                    </div>
+                </div>
+            <% }) %>
+
+            <div class="bg-white rounded-2xl p-6 mt-7 shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-[#123f63]">Total </h2>
+                        <p id="cart-total"
+                           class="text-2xl font-bold text-[#18577f] mt-2">
+                            ₹
+                            <%= cart.reduce((total, book) =>
+                                total + (book.price * book.quantity), 0
+                            ) %>
+                        </p>
+                    </div>
+
+
+                    <form action="/checkout" method="get">
+                        <button type="submit"
+                            class="px-8 py-4 rounded-full
+                                   bg-[#18577f] text-white
+                                   font-semibold
+                                   hover:bg-[#123f63]
+                                   transition">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            Buy Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% } %>
+    </main>
+    <%- include('includes/footer.ejs') %>
+
+    <script>
+        async function changeQuantity(id, action) {
+            const response = await fetch(`/cart/${action}/${id}`, {
+                method: 'POST'
+            });
+            const data = await response.json();
+            if (data.quantity === 0) {
+                const cartItem =
+                    document.getElementById(`cart-item-${id}`);
+
+                if (cartItem) {
+                    cartItem.remove();
+                }
+                updateCartTotal();
+                updateCartCount();
+                return;
+            }
+
+            const quantityElement =
+                document.getElementById(`quantity-${id}`);
+            if (quantityElement) {
+
+                quantityElement.textContent =
+                    data.quantity;
+
+            }
+
+            const subtotalElement =
+                document.getElementById(`subtotal-${id}`);
+            if (subtotalElement) {
+                const price =
+                    Number(subtotalElement.dataset.price);
+                const subtotal =
+                    price * data.quantity;
+                subtotalElement.textContent =
+                    `₹ ${formatPrice(subtotal)}`;
+
+            }
+
+            updateCartTotal();
+            updateCartCount();
+
+        }
+
+        function updateCartTotal() {
+            let total = 0;
+            document.querySelectorAll('[id^="quantity-"]').forEach(
+                quantityElement => {
+                    const id = quantityElement.id.replace('quantity-', '');
+                    const quantity = Number(quantityElement.textContent);
+                    const subtotalElement = document.getElementById(`subtotal-${id}`);
+                    if (subtotalElement) {
+                        const price = Number(subtotalElement.dataset.price);
+                        total += price * quantity;
+                    }
+                }
+            );
+            const cartTotal = document.getElementById('cart-total');
+            if (cartTotal) {
+                cartTotal.textContent =
+                    `₹ ${formatPrice(total)}`;
+
+            }
+
+        }
+
+        function updateCartCount() {
+            let count = 0;
+            document.querySelectorAll('[id^="quantity-"]').forEach(
+                quantityElement => {
+                    count +=
+                        Number(quantityElement.textContent);
+
+                }
+            );
+            const cartCount =  document.getElementById('cart-count');
+
+            if (cartCount) {
+
+                cartCount.textContent = count;
+
+            }
+
+        }
+        function formatPrice(price) {
+
+            return Number(
+                price.toFixed(2)
+            );
+
+        }
+
+    </script>
+</body>
+</html>

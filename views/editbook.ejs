@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Edit Book | <%= siteName %></title><script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="/css/redesign.css"></head>
+<body><%- include('includes/nav.ejs') %>
+<main class="edit-page">
+  <div class="mb-7"><span class="eyebrow">YOUR BOOKSHELF</span><h1 class="mt-3">Edit a book</h1><p style="color:var(--muted)">Refresh the details and keep your collection up to date.</p></div>
+  <form class="edit-form" action="/books/edit/<%= books._id %>" method="post" enctype="multipart/form-data">
+    <label>Book title<input type="text" name="title" value="<%= books.title %>" required></label>
+    <label>Author<input type="text" name="author" value="<%= books.author %>" required></label>
+    <div class="edit-two"><label>Price (₹)<input type="number" name="price" value="<%= books.price %>" required></label><label>Category<input type="text" name="category" value="<%= books.category %>" required></label></div>
+    <div class="current-image"><div><strong>Current cover</strong><p style="color:var(--muted);font-size:12px">Keep it or choose a new image below.</p><label class="file-label">New cover image<input type="file" name="img" accept="image/*"></label></div><img src="<%= books.img.startsWith('/') ? books.img : '/' + books.img %>" alt="Current cover"></div>
+    <button class="btn btn-primary" type="submit"><i class="fa-solid fa-check"></i> Save changes</button><a href="/books" class="btn btn-ghost">Cancel</a>
+  </form>
+</main>
+<style>.edit-page{max-width:760px!important}.edit-form{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,36px);box-shadow:var(--shadow);display:grid;gap:20px}.edit-form>label,.edit-two label{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:700;color:var(--green)}.edit-form input:not([type=file]){width:100%}.edit-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.current-image{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px;background:var(--sage-pale);border-radius:12px}.current-image img{width:110px;height:145px;object-fit:contain;background:#fff;border-radius:8px;padding:8px}.file-label{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:700;color:var(--green)}.file-label input{font-size:11px;max-width:100%}@media(max-width:520px){.edit-two{grid-template-columns:1fr}.current-image{align-items:flex-start;flex-direction:column}}</style>
+<%- include('includes/footer.ejs') %></body></html>

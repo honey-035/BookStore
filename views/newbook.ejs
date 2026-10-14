@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Add New Book | <%= siteName %></title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body class="min-h-screen bg-[#eef7ff]">
+    <%- include('includes/nav.ejs') %>
+    <main class="max-w-3xl mx-auto px-6 py-10">
+        <div class="mb-7">
+            <p class="text-sm font-semibold
+                      text-[#18577f]
+                      uppercase
+                      tracking-wider">
+                Book Collection
+            </p>
+
+            <h1 class="text-3xl font-bold
+                       text-[#123f63]
+                       mt-1"
+                style="font-family: Georgia, serif;">
+                Add New Book
+            </h1>
+
+            <p class="text-gray-600 mt-2">Add a new book to your collection.</p>
+        </div>
+
+        <div class="bg-white
+                    rounded-2xl
+                    shadow-md
+                    border border-[#dcecf7]
+                    p-7">
+
+            <form action="/books"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="mb-5">
+                    <label class="block
+                                  text-sm
+                                  font-semibold
+                                  text-[#123f63]
+                                  mb-2">
+
+                        <i class="fa-solid fa-book
+                                  text-[#18577f] mr-1">
+                        </i>
+                        Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Enter book title"
+                        class="w-full
+                               px-4 py-3
+                               rounded-xl
+                               border border-[#c9dfed]
+                               outline-none
+                               text-gray-700
+                               focus:border-[#18577f]
+                               focus:ring-2
+                               focus:ring-[#18577f]/20
+                               transition">
+                </div>
+
+                <div class="mb-5">
+                    <label class="block
+                                  text-sm
+                                  font-semibold
+                                  text-[#123f63]
+                                  mb-2">
+                        <i class="fa-solid fa-pen-nib
+                                  text-[#18577f] mr-1">
+                        </i> Author
+                    </label>
+
+                    <input
+                        type="text"
+                        name="author"
+                        placeholder="Enter author's name"
+                        class="w-full
+                               px-4 py-3
+                               rounded-xl
+                               border border-[#c9dfed]
+                               outline-none
+                               text-gray-700
+                               focus:border-[#18577f]
+                               focus:ring-2
+                               focus:ring-[#18577f]/20
+                               transition">
+                </div>
+
+                <div class="mb-5">
+                    <label class="block
+                                  text-sm
+                                  font-semibold
+                                  text-[#123f63]
+                                  mb-2">
+
+                        <i class="fa-solid fa-indian-rupee-sign
+                                  text-[#18577f] mr-1">
+                        </i>
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Enter book price"
+                        class="w-full
+                               px-4 py-3
+                               rounded-xl
+                               border border-[#c9dfed]
+                               outline-none
+                               text-gray-700
+                               focus:border-[#18577f]
+                               focus:ring-2
+                               focus:ring-[#18577f]/20
+                               transition">
+                </div>
+
+                <div class="mb-5">
+                    <label class="block
+                                  text-sm
+                                  font-semibold
+                                  text-[#123f63]
+                                  mb-2">
+                        <i class="fa-solid fa-layer-group
+                                  text-[#18577f] mr-1">
+                        </i>
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        name="category"
+                        placeholder="e.g. Fantasy, Fiction, Biography"
+                        class="w-full
+                               px-4 py-3
+                               rounded-xl
+                               border border-[#c9dfed]
+                               outline-none
+                               text-gray-700
+                               focus:border-[#18577f]
+                               focus:ring-2
+                               focus:ring-[#18577f]/20
+                               transition">
+                </div>
+
+                <div class="mb-7">
+                    <label class="block
+                                  text-sm
+                                  font-semibold
+                                  text-[#123f63]
+                                  mb-2">
+                        <i class="fa-solid fa-image
+                                  text-[#18577f] mr-1">
+                        </i>
+                        Book Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="img"
+                        class="w-full
+                               px-4 py-3
+                               rounded-xl
+                               border border-[#c9dfed]
+                               bg-[#f8fcff]
+                               text-gray-600
+                               cursor-pointer
+                               focus:outline-none
+                               focus:border-[#18577f]
+                               transition" >
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full
+                           py-3.5
+                           rounded-xl
+                           bg-[#18577f]
+                           text-white
+                           font-semibold
+                           flex items-center
+                           justify-center
+                           gap-2
+                           cursor-pointer
+                           hover:bg-[#123f63]
+                           transition
+                           shadow-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Book
+                </button>
+            </form>
+        </div>
+    </main>
+    <%-include('includes/footer.ejs')%>
+</body>
+</html>

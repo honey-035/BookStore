@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Categories</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                @apply m-0 min-h-screen font-sans;
+                color: #28465f;
+                background: linear-gradient(
+                    135deg,
+                    #eef7ff 0%,
+                    #dceefb 50%,
+                    #c9e3f5 100%
+                );
+            }
+        }
+
+        @layer components {
+
+            .category-section {
+                @apply mx-auto px-6 py-10;
+                max-width: 1200px;
+            }
+
+            .category-title {
+                @apply mb-2 text-center text-3xl font-bold;
+                color: #123f63;
+                font-family: Georgia, serif;
+            }
+
+            .category-subtitle {
+                @apply mb-8 text-center text-sm;
+                color: #668198;
+            }
+
+            .category-links {
+                @apply mb-12 flex flex-nowrap justify-center gap-2;
+                width: 100%;
+                white-space: nowrap;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+
+            .category-links a {
+                @apply shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold no-underline transition-all duration-200;
+                color: #174e75;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid #c8ddeb !important;
+                box-shadow: 0 4px 12px rgba(31, 78, 121, 0.08);
+            }
+
+            .category-links a:hover {
+                @apply -translate-y-0.5 text-white;
+                background: linear-gradient(
+                    135deg,
+                    #164e78,
+                    #378bd0
+                );
+                box-shadow: 0 8px 18px rgba(35, 111, 174, 0.24);
+            }
+
+            .books-grid {
+                @apply grid gap-7;
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .book-card {
+                @apply flex items-center gap-6 rounded-2xl p-5 transition-all duration-300;
+                background: rgba(255, 255, 255, 0.94);
+                border: 1px solid #d4e6f2;
+                box-shadow:0 10px 28px rgba(31, 78, 121, 0.11);
+            }
+
+            .book-card:hover {
+                @apply -translate-y-1;
+                box-shadow: 0 18px 38px rgba(31, 78, 121, 0.19);
+                border-color: #b8d6e9;
+            }
+
+            .book-card img {
+                @apply shrink-0 rounded-xl object-cover transition-all duration-300;
+                width: 135px;
+                height: 190px;
+                border: 1px solid #cbdfea;
+                box-shadow:  0 8px 18px rgba(31, 78, 121, 0.15);
+            }
+
+            .book-card:hover img {
+                @apply -translate-y-1;
+                box-shadow:0 12px 24px rgba(31, 78, 121, 0.22);
+            }
+
+            .book-info {
+                @apply min-w-0;
+            }
+
+            .book-info h2 {
+                @apply mb-4 text-xl font-bold leading-tight;
+                color: #164e78;
+                font-family: Georgia, serif;
+            }
+
+            .book-info p {
+                @apply mb-2 text-sm;
+                color: #617d92;
+            }
+
+            .book-info span {
+                @apply font-semibold;
+                color: #285a7d;
+            }
+
+            .book-price {
+                @apply mt-4 inline-block rounded-full px-3 py-1 text-sm font-bold;
+                color: #175b88;
+                background: #e8f4fc;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            .book-card {
+                max-width: 650px;
+                width: 100%;
+                margin: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .category-section {
+                @apply px-4 py-7;
+            }
+            .category-title {
+                @apply text-2xl;
+            }
+            .category-links {
+                @apply justify-start gap-2;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .category-links a {
+                @apply px-4 py-2 text-xs shrink-0;
+            }
+            .book-card {
+                @apply gap-4 p-4;
+            }
+            .book-card img {
+                width: 105px;
+                height: 155px;
+            }
+            .book-info h2 {
+                @apply text-lg;
+            }
+            .book-info p {
+                @apply text-xs;
+            }
+        }
+    </style>
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main class="category-section">
+        <h1 class="category-title">Explore Our Collection</h1>
+        <p class="category-subtitle">Discover books across different genres and categories</p>
+        <div class="category-links">
+            <a href="/category" style="border: 1px solid black;"> All</a>
+            <% categories.forEach(category => { %>
+                <a href="/category/<%= category %>">
+                    <%= category %>
+                </a>
+
+            <% }) %>
+
+        </div>
+        <div class="books-grid">
+            <% books.forEach(books => { %>
+                <div class="book-card">
+                    <img src="<%= books.img.startsWith('/') ? books.img : '/' + books.img %>" alt="<%= books.title %>">
+                    <div class="book-info">
+                        <h2>
+                            <%= books.title %>
+                        </h2>
+                        <p>
+                            <span>Author:</span>
+                            <%= books.author %>
+                        </p>
+                        <p>
+                            <span>Category:</span>
+                            <%= books.category %>
+                        </p>
+                        <div class="book-price">
+                            ₹ <%= books.price %>
+                        </div>
+
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+    <%- include('includes/footer.ejs') %>
+</body>
+</html>

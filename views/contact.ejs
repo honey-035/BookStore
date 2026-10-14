@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | <%= siteName %></title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/redesign.css">
+</head>
+<style type="text/tailwindcss">
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        @apply m-0 min-h-screen font-sans;
+        background: linear-gradient(135deg, #eef7ff, #d8ebfa, #c7e0f5);
+    }
+}
+
+@layer components {
+    .contact-card {
+        @apply mx-auto my-12 flex w-[850px] max-w-[92%] overflow-hidden rounded-[24px] bg-white;
+        box-shadow: 0 22px 50px rgba(22, 78, 121, 0.18);
+    }
+
+    .contact-info {
+        @apply w-[42%] p-8 text-white;
+        background: linear-gradient(145deg, #123f63, #18577f, #236f9f);
+    }
+
+    .contact-icon {
+        @apply mb-5 flex h-12 w-12 items-center justify-center rounded-xl text-2xl;
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    .contact-info h2 {
+        @apply mb-4 text-3xl font-bold;
+        font-family: Georgia, serif;
+    }
+
+    .contact-info > p {
+        @apply mb-8 text-sm leading-6;
+        color: #dcefff;
+    }
+
+    .contact-detail {
+        @apply mb-5 flex items-center gap-4;
+    }
+
+    .detail-icon {
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg;
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    .detail-text span {
+        @apply block text-xs;
+        color: #b9d9ef;
+    }
+
+    .detail-text strong {
+        @apply block mt-1 text-sm text-white;
+    }
+
+    .contact-form {
+        @apply w-[58%] p-9;
+    }
+
+    .contact-form h2 {
+        @apply mb-1 text-2xl font-bold;
+        color: #123f63;
+        font-family: Georgia, serif;
+    }
+
+    .form-subtitle {
+        @apply mb-7 text-sm text-slate-500;
+    }
+
+    .contact-form label {
+        @apply mb-2 block text-sm font-semibold;
+        color: #244e70;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        @apply w-full rounded-xl bg-[#f8fbff] px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-200;
+        border: 1px solid #c7dced !important;
+    }
+
+    .contact-form input {
+        @apply h-11;
+    }
+
+    .contact-form textarea {
+        @apply min-h-[120px] resize-none;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+        @apply bg-white ring-4 ring-blue-500/10;
+        border-color: #398bd5 !important;
+    }
+
+    .contact-form br {
+        @apply hidden;
+    }
+
+    .contact-form button {
+        @apply mt-2 h-11 w-full rounded-xl border-0 text-sm font-semibold text-white transition-all duration-200;
+        background: linear-gradient(135deg, #164e78, #2f82c4, #4b9ddd);
+        border: none !important;
+        box-shadow: 0 7px 16px rgba(35, 111, 174, 0.25);
+    }
+
+    .contact-form button:hover {
+        @apply -translate-y-0.5;
+        background: linear-gradient(135deg, #123f63, #246fa8, #398bd5);
+        box-shadow: 0 10px 22px rgba(35, 111, 174, 0.32);
+    }
+}
+
+@media (max-width: 750px) {
+
+    .contact-card {
+        @apply my-8 flex-col;
+    }
+
+    .contact-info,
+    .contact-form {
+        @apply w-full;
+    }
+
+    .contact-info {
+        @apply p-7;
+    }
+
+    .contact-form {
+        @apply p-7;
+    }
+}
+</style>
+<body>
+    <%- include('includes/nav.ejs') %>
+    <div class="contact-card">
+        <div class="contact-info">
+            <div class="contact-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <h2>We're here for you.</h2>
+            <p>
+               Have a question about a book or need assistance 
+               with your order?We're always happy to help. Feel free to get in touch with us.
+            </p>
+            <div class="contact-detail">
+                <div class="detail-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="detail-text">
+                    <span>Email</span>
+                    <strong><%= siteEmail %></strong>
+                </div>
+            </div>
+            <div class="contact-detail">
+                <div class="detail-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="detail-text">
+                    <span>Phone</span>
+                    <strong><%= sitePhone %></strong>
+                </div>
+            </div>
+            <div class="contact-detail">
+                <div class="detail-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="detail-text">
+                    <span>Store</span>
+                    <strong><%= siteLocation %></strong>
+                </div>
+            </div>
+        </div>
+        <form action="/contact" method="post"class="contact-form" >
+            <h2>Send us a message</h2>
+            <p class="form-subtitle">
+                Fill in the details below and we'll get back to you.
+            </p>
+            <label>Name</label>
+            <input type="text" name="name" required style="border: 1px solid black;"placeholder="Enter your name">
+            <br><br>
+            <label>Email</label>
+            <input  type="email"name="email" required style="border: 1px solid black;" placeholder="you@example.com">
+            <br><br>
+            <label>Mobile Number</label>
+            <input type="tel" name="mob" required style="border: 1px solid black;" placeholder="Enter your mobile number">
+            <br><br>
+            <label for="">Message</label>
+            <textarea name="message" style="border: 1px solid black;" requiredplaceholder="Tell us how we can help..." ></textarea>
+            <br><br>
+            <button type="submit" style="border: 1px solid black;" >Send Message →</button>
+        </form>
+    </div>
+    <%-include('includes/footer.ejs')  %>
+</body>
+</html>

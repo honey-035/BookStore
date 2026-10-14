@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand footer-logo" href="/">
+        <span class="brand-mark"><i class="fa-solid fa-book-open"></i></span>
+        <span class="brand-copy"><strong><%= siteName %></strong><small>YOUR NEXT CHAPTER</small></span>
+      </a>
+      <p>Good books. New perspectives. A little more wonder in every day.</p>
+    </div>
+    <div class="footer-links"><span class="footer-label">EXPLORE</span><a href="/books">All books</a><a href="/category">Categories</a><a href="/about">Our story</a><a href="/contact">Contact</a></div>
+    <div class="footer-social"><span class="footer-label">SAY HELLO</span>
+      <div class="social-row">
+        <a href="https://wa.me/<%= siteWhatsapp %>" target="_blank" title="WhatsApp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:<%= siteEmail %>" title="Email" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+        <a href="tel:<%= sitePhone.replace(/\D/g, '') %>" title="Call" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+        <a href="<%= siteGithub %>" target="_blank" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 <%= siteName %>. All rights reserved.</span><span>Made for the love of reading <i class="fa-solid fa-heart"></i></span></div>
+</footer>
