@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer')
 const session = require('express-session')
 
 async function main() {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/bookstore';
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://honey:v2pqWjof1E6H9UOU@ac-xvmonoi-shard-00-00.7g846wq.mongodb.net:27017,ac-xvmonoi-shard-00-01.7g846wq.mongodb.net:27017,ac-xvmonoi-shard-00-02.7g846wq.mongodb.net:27017/?ssl=true&replicaSet=atlas-hjnszu-shard-0&authSource=admin&appName=Cluster0';
     await mongoose.connect(mongoUri);
 }
 
